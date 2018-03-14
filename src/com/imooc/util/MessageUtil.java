@@ -2,6 +2,7 @@ package com.imooc.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,12 +15,15 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.imooc.po.News;
+import com.imooc.po.NewsMessage;
 import com.imooc.po.TextMessage;
 import com.thoughtworks.xstream.XStream;
 
 public class MessageUtil {
 	
 	public static final String MESSAGE_TEXT = "text";
+	public static final String MESSAGE_NEWS = "news";
 	public static final String MESSAGE_IMAGE = "image";
 	public static final String MESSAGE_VOICE = "voice";
 	public static final String MESSAGE_VIDEO = "video";
@@ -104,4 +108,51 @@ public class MessageUtil {
 				+ "而且篮球队（详细见：皇家马德里篮球俱乐部）成就与足球队同样显赫，9次成为欧洲冠军，33次成为本土职业篮球联赛冠军");
 		return sb.toString();
 	}
+	
+	/**
+	 * 图文消息转为xml
+	 * @param newsMessage
+	 * @return
+	 */
+	public static String newsMessageToXml(NewsMessage newsMessage) {
+		XStream xstream = new XStream();
+		xstream.alias("xml", newsMessage.getClass());
+		xstream.alias("item", new News().getClass());
+		return xstream.toXML(newsMessage);
+	}
+	
+	/**
+	 * 图文消息的组装
+	 * @param toUserName
+	 * @param fromUserName
+	 * @return
+	 */
+	
+	public static String initNewsMessage(String toUserName, String fromUserName) {
+		String message = null;
+		List<News> newsList = new ArrayList<News>();
+		NewsMessage newsMessage = new NewsMessage();
+		
+		News news = new News();
+		news.setTitle("皇马队介绍");
+		news.setDescription("皇家马德里足球俱乐部（Real Madrid Club de Fútbol ，中文简称为皇马）是一家位于西班牙首都马德里的足球俱乐部，球队成立于1902年3月6日，前称马德里足球队。\"\r\n" + 
+				"+ \"1920年6月29日，时任西班牙国王阿方索十三世把\\\"Real\\\"（西语，皇家之意）一词加于俱乐部名前，徽章上加上了皇冠，以此来推动足球运动在西班牙首都马德里市的发展。\"\r\n" + 
+				"+ \"从此，俱乐部正式更名为皇家马德里足球俱乐部。");
+		news.setPicUrl("http://a8c82f63.ngrok.io/WeiXin/image/imooc.jpg");
+		news.setUrl("www.realmadrid.cn");
+		
+		newsList.add(news);
+		
+		newsMessage.setToUserName(fromUserName);
+		newsMessage.setFromUserName(toUserName);
+		newsMessage.setCreateTime(new Date().getTime());
+		newsMessage.setMsgType(MESSAGE_NEWS);
+		newsMessage.setArticles(newsList);
+		newsMessage.setArticleCount(newsList.size());
+		
+		message = newsMessageToXml(newsMessage);
+		return message;
+		
+	}
+	
 }
