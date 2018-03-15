@@ -19,7 +19,7 @@ import com.imooc.po.News;
 import com.imooc.po.NewsMessage;
 import com.imooc.po.TextMessage;
 import com.thoughtworks.xstream.XStream;
-
+//b1d723f824409324af87fec0a50a9469
 public class MessageUtil {
 	
 	public static final String MESSAGE_TEXT = "text";
@@ -138,7 +138,7 @@ public class MessageUtil {
 		news.setDescription("皇家马德里足球俱乐部（Real Madrid Club de Fútbol ，中文简称为皇马）是一家位于西班牙首都马德里的足球俱乐部，球队成立于1902年3月6日，前称马德里足球队。\"\r\n" + 
 				"+ \"1920年6月29日，时任西班牙国王阿方索十三世把\\\"Real\\\"（西语，皇家之意）一词加于俱乐部名前，徽章上加上了皇冠，以此来推动足球运动在西班牙首都马德里市的发展。\"\r\n" + 
 				"+ \"从此，俱乐部正式更名为皇家马德里足球俱乐部。");
-		news.setPicUrl("http://a8c82f63.ngrok.io/WeiXin/image/imooc.jpg");
+		news.setPicUrl("http://56dc6118.ngrok.io/WeiXin/image/imooc.jpg");
 		news.setUrl("www.realmadrid.cn");
 		
 		newsList.add(news);
