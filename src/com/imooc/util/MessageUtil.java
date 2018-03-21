@@ -15,6 +15,10 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.imooc.po.Image;
+import com.imooc.po.ImageMessage;
+import com.imooc.po.Music;
+import com.imooc.po.MusicMessage;
 import com.imooc.po.News;
 import com.imooc.po.NewsMessage;
 import com.imooc.po.TextMessage;
@@ -25,6 +29,7 @@ public class MessageUtil {
 	public static final String MESSAGE_TEXT = "text";
 	public static final String MESSAGE_NEWS = "news";
 	public static final String MESSAGE_IMAGE = "image";
+	public static final String MESSAGE_MUSIC = "music";
 	public static final String MESSAGE_VOICE = "voice";
 	public static final String MESSAGE_VIDEO = "video";
 	public static final String MESSAGE_LINK = "link";
@@ -121,6 +126,18 @@ public class MessageUtil {
 		return xstream.toXML(newsMessage);
 	}
 	
+	public static String imageMessageToXml(ImageMessage imageMessage) {
+		XStream xstream = new XStream();
+		xstream.alias("xml", imageMessage.getClass());
+		return xstream.toXML(imageMessage);
+	}
+	
+	public static String musicMessageToXml(MusicMessage musicMessage) {
+		XStream xstream = new XStream();
+		xstream.alias("xml", musicMessage.getClass());
+		return xstream.toXML(musicMessage);
+	}
+	
 	/**
 	 * 图文消息的组装
 	 * @param toUserName
@@ -138,7 +155,7 @@ public class MessageUtil {
 		news.setDescription("皇家马德里足球俱乐部（Real Madrid Club de Fútbol ，中文简称为皇马）是一家位于西班牙首都马德里的足球俱乐部，球队成立于1902年3月6日，前称马德里足球队。\"\r\n" + 
 				"+ \"1920年6月29日，时任西班牙国王阿方索十三世把\\\"Real\\\"（西语，皇家之意）一词加于俱乐部名前，徽章上加上了皇冠，以此来推动足球运动在西班牙首都马德里市的发展。\"\r\n" + 
 				"+ \"从此，俱乐部正式更名为皇家马德里足球俱乐部。");
-		news.setPicUrl("http://56dc6118.ngrok.io/WeiXin/image/imooc.jpg");
+		news.setPicUrl("http://fd3d9359.ngrok.io/WeiXin/image/imooc.jpg");
 		news.setUrl("www.realmadrid.cn");
 		
 		newsList.add(news);
@@ -154,5 +171,56 @@ public class MessageUtil {
 		return message;
 		
 	}
+	
+	/**
+	 * 组装图片消息
+	 * @param toUserName
+	 * @param fromUserName
+	 * @return
+	 */
+	public static String initImageMessage(String toUserName, String fromUserName) {
+		String message = null;
+		Image image = new Image();
+		image.setMediaId("fWe_nkrWoV80A6-YbMd2C3xKmcQpiv8sjJnpYIT6BMMXN3vD9pH2uwoJe_CPkk6C");
+		
+		ImageMessage imageMessage = new ImageMessage();
+		imageMessage.setFromUserName(toUserName);
+		imageMessage.setToUserName(fromUserName);
+		imageMessage.setMsgType(MESSAGE_IMAGE);
+		imageMessage.setCreateTime(new Date().getTime());
+		imageMessage.setImage(image);
+		message = imageMessageToXml(imageMessage);
+		return message;
+	}
+	
+	/**
+	 * 组装音乐消息
+	 * @param toUserName
+	 * @param fromUserName
+	 * @return
+	 */
+	public static String initMusicMessage(String toUserName, String fromUserName) {
+		String message = null;
+		Music music = new Music();
+		music.setThumbMediaId("fWe_nkrWoV80A6-YbMd2C3xKmcQpiv8sjJnpYIT6BMMXN3vD9pH2uwoJe_CPkk6C");
+		music.setTitle("Valder Fields");
+		music.setDescription("Tamas Wells");
+		music.setMusicUrl("http://fd3d9359.ngrok.io/WeiXin/resource/Tamas Wells - Valder Fields.mp3");
+		music.setHQMusicUrl("http://fd3d9359.ngrok.io/WeiXin/resource/Tamas Wells - Valder Fields.mp3");
+		
+		MusicMessage musicMessage = new MusicMessage();
+		musicMessage.setFromUserName(toUserName);
+		musicMessage.setToUserName(fromUserName);
+		musicMessage.setMsgType(MESSAGE_MUSIC);
+		musicMessage.setCreateTime(new Date().getTime());
+		musicMessage.setMusic(music);
+		message = musicMessageToXml(musicMessage);
+		return message;
+	}
+	
+	
+	
+	
+	
 	
 }
