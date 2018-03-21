@@ -15,9 +15,9 @@ public class WeiXinTest {
 		System.out.println("票据：" + token.getToken());
 		System.out.println("有效时间：" + token.getExpiresIn());
 		
-//		String path = "D:/imooc.jpg";
-//		String mediaId = WeixinUtil.upload(path, token.getToken(), "thumb");
-//		System.out.println(mediaId);
+		String path = "D:/imooc.jpg";
+		String mediaId = WeixinUtil.upload(path, token.getToken(), "thumb");
+		System.out.println(mediaId);
 		
 		String menu = JSONObject.fromObject(WeixinUtil.initMeny()).toString();
 		int result = WeixinUtil.createMenu(token.getToken(), menu);
