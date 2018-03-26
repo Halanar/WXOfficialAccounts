@@ -39,6 +39,7 @@ public class MessageUtil {
 	public static final String MESSAGE_UNSUBSCRIBE = "unsubscribe";
 	public static final String MESSAGE_CLICK = "CLICK";
 	public static final String MESSAGE_VIEW = "VIEW";
+	public static final String MESSAGE_SCANCODE = "scancode_push";
 	/**
 	 * xml转为map集合
 	 * @param request
